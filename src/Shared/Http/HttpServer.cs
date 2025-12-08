@@ -1,49 +1,45 @@
 namespace Shared.Http;
 
-using Shared.Config;
 using System.Net;
+using Shared.Config;
 
 public abstract class HttpServer
-    {
-        protected HttpRouter router;
-        protected HttpListener server;
+{
+    protected HttpRouter router;
+    protected HttpListener server;
 
-public HttpServer()
+    public HttpServer()
     {
         router = new HttpRouter();
 
-      Init();
-      string host = Configuration.Get<string>("HOST", "http://127.0.0.1");
-      string port = Configuration.Get<string>("PORT", "5000");
-      string authority = $"{host}:{port}/";
-      server = new HttpListener();
-      server.Prefixes.Add(authority);
-      Console.WriteLine("Server started at " + authority);
+        Init();
+        string host = Configuration.Get<string>("HOST", "http://127.0.0.1");
+        string port = Configuration.Get<string>("PORT", "5000");
+        string authority = $"{host}:{port}/";
+        server = new HttpListener();
+        server.Prefixes.Add(authority);
+        Console.WriteLine("Server started at " + authority);
     }
 
-public abstract void Init();
+    public abstract void Init();
 
-public async Task Start()
-
+    public async Task Start()
     {
         server.Start();
-        while(server.IsListening)
-    {
-
-HttpListenerContext ctx = await server.GetContextAsync();
-        _ = router.HandleContextAsync(ctx);
-
-    }
+        while (server.IsListening)
+        {
+            HttpListenerContext ctx = await server.GetContextAsync();
+            _ = router.HandleContextAsync(ctx);
+        }
     }
 
-public void Stop()
-
+    public void Stop()
     {
-          if(server.IsListening)
-    {
-          server.Stop();
-          server.Close();
-          Console.WriteLine("Server stopped.");
-    }
+        if (server.IsListening)
+        {
+            server.Stop();
+            server.Close();
+            Console.WriteLine("Server stopped.");
+        }
     }
 }
