@@ -33,4 +33,14 @@ public class App : HttpServer
             }
         );
     }
+public static async Task LandingPageIndexRedirect(HttpRequest req, HttpResponse res, RouteProperties props, Func<Task> next)
+    {
+        res.Redirect("/index.html");
+        await next();
+    }
+public static async Task MoviePageIndexRedirect(HttpRequest req, HttpResponse res, RouteProperties props, Func<Task> next)
+    {
+        res.Redirect("/movies/index.html");
+        await next();
+    }
 }
