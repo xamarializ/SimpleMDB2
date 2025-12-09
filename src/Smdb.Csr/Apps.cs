@@ -1,5 +1,7 @@
 namespace Smdb.Csr;
 
+using System.Collections;
+using System.Net;
 using Shared.Http;
 
 public class App : HttpServer
@@ -16,29 +18,28 @@ public class App : HttpServer
         router.Use(HttpUtils.ParseRequestQueryString);
         router.Use(HttpUtils.ServeStaticFiles);
         router.UseSimpleRouteMatching();
-        router.MapGet(
-            "/",
-            async (req, res, props, next) =>
-            {
-                res.Redirect("/index.html");
-                await next();
-            }
-        );
-        router.MapGet(
-            "/movies",
-            async (req, res, props, next) =>
-            {
-                res.Redirect("/movies/index.html");
-                await next();
-            }
-        );
+
+        router.MapGet("/", LandingPageIndexRedirect);
+        router.MapGet("/movies", MoviePageIndexRedirect);
     }
-public static async Task LandingPageIndexRedirect(HttpRequest req, HttpResponse res, RouteProperties props, Func<Task> next)
+
+    public static async Task LandingPageIndexRedirect(
+        HttpListenerRequest req,
+        HttpListenerResponse res,
+        Hashtable props,
+        Func<Task> next
+    )
     {
         res.Redirect("/index.html");
         await next();
     }
-public static async Task MoviePageIndexRedirect(HttpRequest req, HttpResponse res, RouteProperties props, Func<Task> next)
+
+    public static async Task MoviePageIndexRedirect(
+        HttpListenerRequest req,
+        HttpListenerResponse res,
+        Hashtable props,
+        Func<Task> next
+    )
     {
         res.Redirect("/movies/index.html");
         await next();
