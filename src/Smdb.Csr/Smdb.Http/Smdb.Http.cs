@@ -22,7 +22,8 @@ namespace Smdb.Http
     {
         public void Redirect(
             string url
-        ) { /* aquí pones la lógica si quieres */
+        )
+        { /* aquí pones la lógica si quieres */
         }
     }
 
@@ -32,12 +33,14 @@ namespace Smdb.Http
     {
         public void Use(
             Func<HttpRequest, HttpResponse, RouteProperties, Func<Task>, Task> middleware
-        ) { }
+        )
+        { }
 
         public void MapGet(
             string path,
             Func<HttpRequest, HttpResponse, RouteProperties, Func<Task>, Task> handler
-        ) { }
+        )
+        { }
 
         public void UseSimpleRouteMatching() { }
     }
