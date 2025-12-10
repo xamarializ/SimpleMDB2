@@ -1,4 +1,4 @@
-export const API_BASE = 'http://localhost:8080/api/v1';
+export const API_BASE = "https://smdb-0791-api-grdwd2g3csckepbz.centralus-01.azurewebsites.net";
 export const $ = (sel, el = document) => el.querySelector(sel);
 export const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
 export const getQueryParam = (k) => new URLSearchParams(location.search).get(k);
